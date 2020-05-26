@@ -1,0 +1,62 @@
+﻿@page
+@model Projekt2_programowanie.Pages.Monuments.MyMonumentsModel
+@{
+    ViewData["Title"] = "MyMonuments";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+    string CurrentUser = User.Identity.Name.Substring(0, User.Identity.Name.LastIndexOf("@"));
+    var myMonuments = Model.MyMonuments.Where(m => m.AddingUser == CurrentUser);
+}
+
+<environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</environment>
+
+<br />
+<br />
+
+<form method="get" asp-page="MyMonuments">
+    <div class="row">
+        <div class=" col-6">
+            <h2 class="text-info">The Most Interesting Monuments</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-page="Create" class="btn btn-info">Create</a>
+        </div>
+    </div>
+    <br />
+    @if (myMonuments.Count() == 0)
+    {
+        <p>No monument has been added yet! Add a new monument!</p>
+    }
+    else
+    {
+        <div class="row recipes">
+            @foreach (var item in myMonuments)
+            {
+
+                <div class="monument col-md-4" style="text-align:center;">
+                    @if (item.Image != null)
+                    {
+                        <img class="img img-thumbnail" width="300" height="205" src="~/uploads/@item.Image" />
+                    }
+
+                    @if (item.Image == null)
+                    {
+                        <img class="img img-thumbnail" width="300" height="205" src="~/uploads/v1.jpg" />
+
+                    }
+
+                    <h3 style="text-align:center;"><a asp-page="Details" asp-route-id="@item.Id">@item.MonumentName</a></h3>
+                    <p style="height:60px;
+                    line-height:20px;
+                    overflow:hidden;">@item.MonumentDescription</p>
+                </div>
+            }
+        </div>
+    }
+    </div>
+
+</form>

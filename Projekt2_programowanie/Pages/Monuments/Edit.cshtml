@@ -1,0 +1,69 @@
+﻿@page
+@model Projekt2_programowanie.Pages.Monuments.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{ 
+    string myImage = Model.Monument.Image;
+}
+
+
+
+
+<h1>Edit</h1>
+
+<h4>Monument</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All"></div>
+            <input type="hidden" asp-for="Monument.Id" />
+            <div class="form-group">
+                <label asp-for="Monument.MonumentName" class="control-label">Monument Name: </label>
+                <input asp-for="Monument.MonumentName" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Monument.Country" class="control-label">Country: </label>
+                <input asp-for="Monument.Country" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Monument.MonumentDescription" class="control-label">Description: </label>
+                <textarea asp-for="Monument.MonumentDescription" class="form-control" rows="5" wrap="hard" id="Description"></textarea>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Monument.Image" class="control-label">Image: </label>
+                <input type="file" asp-for="Image" />
+                
+
+            </div>
+
+            
+                <div class="form-group">
+                    <label asp-for="Monument.AddingUser">Adding User:</label>
+                
+                    <input asp-for="Monument.AddingUser" class="form-control" readonly="readonly" value="@User.Identity.Name.Substring(0, User.Identity.Name.LastIndexOf("@"))" />
+                </div>
+
+          
+
+            <div class="form-group">
+                <input type="submit"  value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

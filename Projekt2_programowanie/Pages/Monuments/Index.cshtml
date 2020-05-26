@@ -1,0 +1,92 @@
+﻿@page
+@model Projekt2_programowanie.Pages.Monuments.IndexModel
+@using Projekt2_programowanie.Utility
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+    
+
+
+
+<environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</environment>
+
+<br />
+<br />
+<form method="get" asp-page="Index">
+    <div class="border backgroundWhite">
+
+        <div style="height:60px" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="padding-top:10px">
+                        <div class="col-4">
+                            @Html.Editor("searchCountry", new { htmlAttributes = new { @class = "form-control", placeholder = "Country..." } })
+                        </div>
+                        @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+                        {
+                            <div class="col-4">
+                                @Html.Editor("searchUser", new { htmlAttributes = new { @class = "form-control", placeholder = "User..." } })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="row" style="padding-top:10px; padding-right:10px;">
+                        <button type="submit" name="submit" value="search" class="btn btn-info form-control" style="text-align:center;">Search</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class=" col-6">
+                <h2 class="text-info">The Most Interesting Monuments</h2>
+            </div>
+            <div class="col-6 text-right">
+                <a asp-page="Create" class="btn btn-info">Create</a>
+            </div>
+        </div>
+        <br />
+        @if (Model.Monument.Count == 0)
+        {
+            <p>No monument has been added yet! Add a new monument!</p>
+        }
+        else
+        {
+            <div class="row recipes">
+                @foreach (var item in Model.Monument)
+                {
+
+                    <div class="monument col-md-4" style="text-align:center;">
+                        @if (item.Image != null)
+                        {
+                            <img class="img img-thumbnail" width="300" height="205" src="~/uploads/@item.Image" />
+                        }
+
+                        @if (item.Image == null)
+                        {
+                            <img class="img img-thumbnail" width="300" height="205" src="~/uploads/v1.jpg" />
+
+                        }
+
+                        <h3 style="text-align:center;"><a asp-page="Details" asp-route-id="@item.Id">@item.MonumentName</a></h3>
+                        <p style="height:60px;
+                    line-height:20px;
+                    overflow:hidden;">@item.MonumentDescription</p>
+                </div>
+            }
+            </div>
+        }
+    </div>
+</form>

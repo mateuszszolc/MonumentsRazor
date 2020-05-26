@@ -1,0 +1,83 @@
+﻿@page
+@model Projekt2_programowanie.Pages.Monuments.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{ 
+ 
+}
+
+<br/>
+<h2 class="text-info">Add Monument</h2>
+<br/>
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
+    <div class="border backgroundWhite">
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Monument.MonumentName">Monument Name:</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Monument.MonumentName" class="form-control" />
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Monument.Country">Country:</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Monument.Country" class="form-control" />
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Monument.MonumentDescription">Description:</label>
+            </div>
+            <div class="col-5">
+                <textarea asp-for="Monument.MonumentDescription" class="form-control" rows="5" wrap="hard" id="Description"></textarea>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Image">Image:</label>
+            </div>
+            <div class="col-5">
+                <input type="file" asp-for="Image" accept="image/*" />
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Monument.AddingUser">Adding User:</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Monument.AddingUser" class="form-control" readonly="readonly" value="@User.Identity.Name.Substring(0, User.Identity.Name.LastIndexOf("@"))" />
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-dark form-control">Save</button>
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="Index" class="btn btn-dark form-control">Back</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

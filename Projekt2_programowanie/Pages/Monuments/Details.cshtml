@@ -1,0 +1,95 @@
+﻿@page
+@model Projekt2_programowanie.Pages.Monuments.DetailsModel
+@using Projekt2_programowanie.Utility
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+    var MonumentName = Model.Monument.MonumentName;
+    var MonumentCountry = Model.Monument.Country;
+    bool isLogged= !User.Identity.IsAuthenticated;
+}
+
+
+
+<div style="text-align:right;">
+    @if(isLogged)
+    {
+
+    }
+    else if (User.IsInRole(SD.AdminEndUser) || User.Identity.Name.Substring(0, User.Identity.Name.LastIndexOf("@")) == Model.Monument.AddingUser)
+    {
+    <a asp-page="./Delete" asp-route-id="@Model.Monument.Id" class="btn btn-danger">Delete</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Monument.Id" class="btn btn-info">Edit</a>
+    }
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a><br /><br />
+</div>
+<div>
+
+    <h2 style="text-align:center;">@Html.DisplayFor(model => model.Monument.MonumentName)</h2>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            Country:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Monument.Country)
+        </dd>
+
+        <dt class="col-sm-2">
+            Description:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Monument.MonumentDescription)
+        </dd>
+        @if (Model.Monument.Image != null)
+        {
+        <dt class="col-sm-2">
+            Image:
+        </dt>
+
+        <dd class="col-sm-10">
+            <p style="text-align:center;"> <img width="600" height="300" class="img img-thumbnail" src="~/uploads/@Url.Content(@Model.Monument.Image)" />
+        </dd>
+        }
+        else
+        {
+            <br/>
+        }
+        @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+        {
+            <dt class="col-sm-2">
+                Google Maps:
+            </dt>
+
+            <dd class="col-sm-10">
+                <p style="text-align:center;">
+
+                    @*<iframe src="https://www.google.com/maps/embed/v1/place?key=apiKey=@MonumentName+@MonumentCountry"
+                            width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>*@
+                    <br />
+                    <br />
+                <p style="text-align:center; font-size:20px;">
+                    Postet by:   @Html.DisplayFor(model => model.Monument.AddingUser)
+                </p>
+                </p>
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-12" style="text-align:center;">
+                <br />
+                To see more information, please log in!
+            </dt>
+        }
+
+
+    </dl>
+
+</div>
+
